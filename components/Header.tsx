@@ -29,7 +29,7 @@ const Header = () => {
         </form>
       </div>
 
-      <div>
+      <div className='flex items-center space-x-4 px-6'>
         <Link
           href={""}
           className='icon'
