@@ -59,7 +59,7 @@ const Header = () => {
           className='icon'
         >
           <MessagesSquare className='h-5' />
-          <p>Home</p>
+          <p>Messaging</p>
         </Link>
 
         {/* User button if signed in*/}
