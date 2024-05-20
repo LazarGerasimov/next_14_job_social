@@ -10,8 +10,12 @@ const UserInformation = async () => {
   return (
     <div>
       <Avatar>
-        <AvatarImage src={user?.imageUrl || "https://github.com/shadcn.png"} />
-        <AvatarFallback>{user?.firstName?.charAt(0)} {user?.lastName}</AvatarFallback>
+        {user?.id ? (
+          <AvatarImage src={user?.imageUrl} />
+        ) : (
+          <AvatarImage src="https://github.com/shadcn.png" />
+        )}
+        <AvatarFallback>{user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}</AvatarFallback>
       </Avatar>
     </div>
   )
