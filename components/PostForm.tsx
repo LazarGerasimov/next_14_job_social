@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { ImageIcon, XIcon } from "lucide-react";
 import { useRef, useState } from "react";
+import createPostAction from "@/actions/create-post-action";
 
 const PostForm = () => {
 
@@ -12,6 +13,25 @@ const PostForm = () => {
   const ref = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
+
+  const handlePostAction = async (formData: FormData) => {
+    const formDataCopy = formData;
+    ref.current?.reset();
+
+    const text = formDataCopy.get("postInput") as string;
+
+    if (!text.trim()) {
+      throw new Error("You must provide some text for the post");
+    }
+
+    setPreview(null);
+
+    try {
+      await createPostAction(formDataCopy);
+    } catch (error) {
+      console.log("Error creating post: ", error)
+    }
+  }
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -23,7 +43,12 @@ const PostForm = () => {
 
   return (
     <div className="mb-2">
-      <form ref={ref} action="" className="p-3 bg-white rounded-lg border">
+      <form ref={ref} action={formData => {
+        // Handle form submission with server action
+        handlePostAction(formData);
+
+        // Toast notification based on the promise above
+      }} className="p-3 bg-white rounded-lg border">
         <div className="flex items-center space-x-2">
           <Avatar>
             <AvatarImage src={user?.imageUrl || "https://github.com/shadcn.png"} />
