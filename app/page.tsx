@@ -7,12 +7,12 @@ export default function Home() {
         <UserInformation />
       </section>
 
-      <section>
+      <section className="col-span-full md:col-span-6 xl:col-span-4 xl:max-w-xl mx-auto w-full">
         {/* Post Form (Create Post) */}
         {/* PostFeed */}
       </section>
 
-      <section>
+      <section className="hidden xl:inline justify-center col-span-2">
         {/* Widget / Sidebar */}
       </section>
     </div>
