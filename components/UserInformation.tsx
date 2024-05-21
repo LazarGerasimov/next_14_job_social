@@ -10,7 +10,7 @@ const UserInformation = async () => {
   const user = await currentUser();
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center bg-white mr-6 rounded-lg border py-4">
       <Avatar>
         {user?.id ? (
           <AvatarImage src={user?.imageUrl} />
@@ -43,6 +43,8 @@ const UserInformation = async () => {
           </Button>
         </div>
       </SignedOut>
+
+      <hr className="w-full border-gray-200 my-5" />
     </div>
   )
 }
