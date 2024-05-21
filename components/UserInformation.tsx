@@ -1,6 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { SignedIn } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { Button } from "./ui/button";
 
 
 
@@ -31,6 +32,17 @@ const UserInformation = async () => {
           </p>
         </div>
       </SignedIn>
+
+      <SignedOut>
+        <div className="text-center space-y-2">
+          <p className="font-semibold">
+            You are not signed in
+          </p>
+          <Button asChild className="bg-[#0B63C4] text-white">
+            <SignInButton>Sign in</SignInButton>
+          </Button>
+        </div>
+      </SignedOut>
     </div>
   )
 }
