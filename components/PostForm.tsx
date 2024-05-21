@@ -2,14 +2,28 @@
 
 import { useUser } from "@clerk/nextjs"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
+import { ImageIcon } from "lucide-react";
+import { useRef, useState } from "react";
 
 const PostForm = () => {
 
   const { user } = useUser();
+  const ref = useRef<HTMLFormElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+  }
 
   return (
     <div>
-      <form action="">
+      <form ref={ref} action="">
         <div className="flex items-center space-x-2">
           <Avatar>
             <AvatarImage src={user?.imageUrl || "https://github.com/shadcn.png"} />
@@ -19,12 +33,43 @@ const PostForm = () => {
             </AvatarFallback>
           </Avatar>
 
+          {/* Text input */}
           <input
             type="text"
             name="postInput"
             placeholder="Write a post.."
             className="flex-1 outline-none rounded-full py-3 px-4 border"
           />
+
+          {/* Image file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            name="image"
+            accept="image/*"
+            hidden
+            onChange={handleImageChange}
+          />
+
+          <button type="submit" hidden>
+            Post
+          </button>
+        </div>
+
+        {/* Preview conditional check*/}
+        {preview && (
+          <div className="mt-3">
+            <img src={preview} alt="preview" className="w-full object-cover" />
+          </div>
+        )}
+
+        <div>
+          <Button type="button" onClick={() => fileInputRef.current?.click()}>
+            <ImageIcon className="mr-2" size={16} color="currentColor" />
+            {preview ? "Change" : "Add"}
+          </Button>
+
+          {/* Remove preview button */}
         </div>
       </form>
     </div>
