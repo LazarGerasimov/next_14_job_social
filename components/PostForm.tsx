@@ -3,7 +3,7 @@
 import { useUser } from "@clerk/nextjs"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, XIcon } from "lucide-react";
 import { useRef, useState } from "react";
 
 const PostForm = () => {
@@ -63,13 +63,21 @@ const PostForm = () => {
           </div>
         )}
 
-        <div>
+        <div className="flex justify-end mt-2 space-x-2">
           <Button type="button" onClick={() => fileInputRef.current?.click()}>
             <ImageIcon className="mr-2" size={16} color="currentColor" />
-            {preview ? "Change" : "Add"}
+            {preview ? "Change Image" : "Add"}
           </Button>
 
           {/* Remove preview button */}
+          {preview && (
+            <Button variant={"outline"}>
+              <XIcon className="mr-2" size={16} color="currentColor" />
+              Remove Image
+            </Button>
+          )}
+
+
         </div>
       </form>
     </div>
