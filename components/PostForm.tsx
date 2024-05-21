@@ -22,8 +22,8 @@ const PostForm = () => {
   }
 
   return (
-    <div>
-      <form ref={ref} action="">
+    <div className="mb-2">
+      <form ref={ref} action="" className="p-3 bg-white rounded-lg border">
         <div className="flex items-center space-x-2">
           <Avatar>
             <AvatarImage src={user?.imageUrl || "https://github.com/shadcn.png"} />
@@ -71,15 +71,16 @@ const PostForm = () => {
 
           {/* Remove preview button */}
           {preview && (
-            <Button variant={"outline"}>
+            <Button variant={"outline"} type="button" onClick={() => setPreview(null)}>
               <XIcon className="mr-2" size={16} color="currentColor" />
               Remove Image
             </Button>
           )}
 
-
         </div>
       </form>
+
+      <hr className="mt-2 border-gray-300" />
     </div>
   )
 }
