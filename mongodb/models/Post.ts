@@ -49,3 +49,13 @@ const PostSchema = new Schema<IPostDocument>(
   }
 );
 
+PostSchema.methods.likePost = async function (userId: string) {
+  try {
+    await this.updateOne({ $addToSet: { likes: userId } });
+  } catch (error) {
+    console.log("error when liking post", error);
+  }
+};
+
+
+
