@@ -83,7 +83,17 @@ PostSchema.methods.commentOnPost = async function (commentToAdd: ICommentBase) {
   }
 };
 
-
+PostSchema.methods.getAllComments = async function () {
+  try {
+    await this.populate({
+      path: "comments",
+      options: { sort: { createdAt: -1 } }, // sort comments by newest first
+    });
+    return this.comments;
+  } catch (error) {
+    console.log("error while getting all comments", error);
+  }
+}
 
 
 
