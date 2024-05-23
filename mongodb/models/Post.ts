@@ -65,7 +65,13 @@ PostSchema.methods.unlikePost = async function (userId: string) {
   }
 };
 
-
+PostSchema.methods.removePost = async function () {
+  try {
+    await this.model("Post").deleteOne({ _id: this._id });
+  } catch (error) {
+    console.log("error when removing post", error);
+  }
+}
 
 
 
