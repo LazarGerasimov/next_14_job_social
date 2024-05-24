@@ -93,6 +93,30 @@ PostSchema.methods.getAllComments = async function () {
   } catch (error) {
     console.log("error while getting all comments", error);
   }
+};
+
+PostSchema.methods.getAllPosts = async function () {
+  try {
+    const posts = await this.find()
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "comments",
+
+        options: { sort: { createdAt: -1 } }
+      })
+      .lean();
+
+    return posts.map((post: IPostDocument) => ({
+      ...post,
+      _id: post._id?.toString(),
+      comments: post.comments?.map((comment: IComment) => ({
+        ...comment,
+        _id: comment._id?.toString(),
+      }))
+    }))
+  } catch (error) {
+    console.log("error when getting all posts", error);
+  }
 }
 
 
