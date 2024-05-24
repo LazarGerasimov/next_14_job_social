@@ -117,7 +117,11 @@ PostSchema.methods.getAllPosts = async function () {
   } catch (error) {
     console.log("error when getting all posts", error);
   }
-}
+};
+
+export const Post = models.Post as IPostModel || mongoose.model<IPostDocument, IPostModel>("Post", PostSchema);
+
+
 
 
 
