@@ -1,5 +1,6 @@
 "use server";
 
+import { IUser } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
 
 export default async function createPostAction(formData: FormData) {
@@ -18,6 +19,12 @@ export default async function createPostAction(formData: FormData) {
   }
 
   // define user 
+  const userDB: IUser = {
+    userId: user.id,
+    userImage: user.imageUrl,
+    firstName: user.firstName || "John",
+    lastName: user.lastName || "Doe"
+  }
 
   // Upload image if there is one
 
