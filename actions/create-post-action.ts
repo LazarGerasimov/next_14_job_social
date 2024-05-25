@@ -1,7 +1,9 @@
 "use server";
 
+import { Post } from "@/mongodb/models/Post";
 import { IUser } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
+import { text } from "stream/consumers";
 
 export default async function createPostAction(formData: FormData) {
   const user = await currentUser();
@@ -26,9 +28,24 @@ export default async function createPostAction(formData: FormData) {
     lastName: user.lastName || "Doe"
   }
 
-  // Upload image if there is one
 
-  // create post in db
+  try {
+    if (image.size > 0) {
+      // upload it 
+      // create post in db with image
+    } else {
+      // create post in db without image  
+
+      const body = {
+        user: userDB,
+        text: postInput
+      };
+
+      await Post.create(body);
+    }
+  } catch (error: any) {
+    throw new Error("Failed to create post", error);
+  }
 
   // revalidatePath '/'
 
