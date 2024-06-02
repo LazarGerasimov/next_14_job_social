@@ -1,5 +1,6 @@
 "use server";
 
+import { AddPostRequestBody } from "@/app/api/posts/route";
 import { Post } from "@/mongodb/models/Post";
 import { IUser } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
@@ -32,11 +33,17 @@ export default async function createPostAction(formData: FormData) {
   try {
     if (image.size > 0) {
       // upload it 
+      const body: AddPostRequestBody = {
+        user: userDB,
+        text: postInput,
+        // imageUrl
+      };
       // create post in db with image
+      await Post.create(body);
     } else {
       // create post in db without image  
 
-      const body = {
+      const body: AddPostRequestBody = {
         user: userDB,
         text: postInput
       };
